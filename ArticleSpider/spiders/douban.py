@@ -13,7 +13,7 @@
 
 import scrapy
 from ArticleSpider.items import DoubanspiderItem
-
+from scrapy_redis.spiders import RedisSpider
 
 class DoubanSpider(scrapy.Spider):
     name = "douban"

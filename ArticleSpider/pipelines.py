@@ -30,9 +30,9 @@ class ArticlespiderPipeline(object):
 class DoubanspiderPipeline(object):
     def __init__(self):
         # 账号密码方式连接MongoDB | "mongodb://用户名:密码@公网ip:端口/"
-        self.client = pymongo.MongoClient('mongodb://root:root@45.76.219.234:27017/')
+        self.client = pymongo.MongoClient('mongodb://localhost:27017/')
         # 指定数据库
-        self.db = self.client.test
+        self.db = self.client.douban
         # 指定集合
         self.collection = self.db.douban
 
@@ -98,19 +98,34 @@ class JsonWriterPipeline(object):
 import MySQLdb
 # 博客园mysql入库
 class MysqlPipeline(object):
-    #采用同步的机制写入mysql, 比较慢
+    # #采用同步的机制写入mysql, 比较慢
+    # def __init__(self):
+    #     self.conn = MySQLdb.connect(host="127.0.0.1", user="root", passwd="password", db="article_spider", port=53306,
+    #                         charset="utf8")
+    #     self.cursor = self.conn.cursor()
+    #
+    # def process_item(self, item, spider):
+    #     insert_sql = """
+    #         insert into jobblole_article(title, url, url_object_id,tags,content,create_date)
+    #         VALUES (%s, %s, %s, %s,%s,%s)
+    #     """
+    #     self.cursor.execute(insert_sql, (item["title"], item["url"], item["url_object_id"],item["tags"],item["content"],item["create_date"]))
+    #     self.conn.commit()
+
+
     def __init__(self):
-        self.conn = MySQLdb.connect(host="45.76.219.234", user="root", passwd="password", db="article_spider", port=53306,
-                            charset="utf8")
-        self.cursor = self.conn.cursor()
+        # 账号密码方式连接MongoDB | "mongodb://用户名:密码@公网ip:端口/"
+        self.client = pymongo.MongoClient('mongodb://localhost:27017/')
+        # 指定数据库
+        self.db = self.client.bokeyuan
+        # 指定集合
+        self.collection = self.db.bokeyuan
 
     def process_item(self, item, spider):
-        insert_sql = """
-            insert into jobblole_article(title, url, url_object_id,tags,content,create_date)
-            VALUES (%s, %s, %s, %s,%s,%s)
-        """
-        self.cursor.execute(insert_sql, (item["title"], item["url"], item["url_object_id"],item["tags"],item["content"],item["create_date"]))
-        self.conn.commit()
+        data = dict(item)
+        # 向指定的表里添加数据
+        self.collection.insert(data)
+        return item
 
 
 from twisted.enterprise import adbapi
@@ -208,7 +223,20 @@ class ElasticsearchPipeline(object):
 
 
 
+# Job伯乐信息下载
+class JobblePipeline(object):
+    def __init__(self):
+        # 账号密码方式连接MongoDB | "mongodb://用户名:密码@公网ip:端口/"
+        self.client = pymongo.MongoClient('mongodb://localhost:27017/')
+        # 指定数据库
+        self.db = self.client.bole
+        # 指定集合
+        self.collection = self.db.bole
 
+    def process_item(self, item, spider):
+        data = dict(item)
+        # 向指定的表里添加数据
+        self.collection.insert(data)
 
 
 

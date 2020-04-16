@@ -12,7 +12,7 @@ from ArticleSpider.utils import common
 from ArticleSpider.items import JobBoleArticleItem
 from selenium import webdriver
 class JobboleSpider(scrapy.Spider):
-    name = 'jobbole'
+    name = 'bokeyuan'
     allowed_domains = ['news.cnblogs.com']
     start_urls = ['http://news.cnblogs.com/']
     #学习完以后不要去设想立马就能下载所有的新闻

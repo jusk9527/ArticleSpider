@@ -6,7 +6,7 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-from ArticleSpider.tools.crawl_xici_ip import GetIP
+# from ArticleSpider.tools.crawl_xici_ip import GetIP
 
 class ArticlespiderSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -126,9 +126,12 @@ class RandomUserAgentMiddlware(object):
 
 class RandomProxyMiddleware(object):
     #动态设置ip代理
+    # def process_request(self, request, spider):
+    #     get_ip = GetIP()
+    #     request.meta["proxy"] = get_ip.get_random_ip()
+
     def process_request(self, request, spider):
-        get_ip = GetIP()
-        request.meta["proxy"] = get_ip.get_random_ip()
+        request.meta['proxy'] = "http://127.0.0.1:1087"
 
 
 # from scrapy.http import HtmlResponse

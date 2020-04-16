@@ -46,8 +46,82 @@ from scrapy.selector import Selector
 #phantomjs, 无界面的浏览器， 多进程情况下phantomjs性能会下降很严重
 
 
+
+# https://blog.csdn.net/djshichaoren/article/details/89850273 版本问题
 from selenium import webdriver
-browser = webdriver.Chrome(executable_path="C:/Users/Administrator/Downloads/spider-master/ArticleSpider/chrome_nocdc/chromedriver.exe")
-browser.get("https://www.linuxidc.com/Linux/2016-02/128315.htm")
-print (browser.page_source)
+import time
+from ArticleSpider.settings import BASE_DIR
+import os
+import pickle
+chromeOptions = webdriver.ChromeOptions()
+
+# 设置代理
+chromeOptions.add_argument("--proxy-server=http://127.0.0.1:1087")
+
+browser = webdriver.Chrome(
+    executable_path="/Users/xiao/PycharmProjects/ArticleSpider/chrome_nocdc/chromedriver"
+)
+browser.get("https://www.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=110 ")
+res = browser.find_element_by_id("email").send_keys("facebook@lisunlou.com")
+browser.find_element_by_id("pass").send_keys("~q13lYbCy0jI76{M")
+browser.find_element_by_id("loginbutton").click()
+import time
+
+# time.sleep(10)
+cookies = browser.get_cookies()
+print(cookies)
+
+if os.path.exists(BASE_DIR+"/cookies/facebook.cookies"):
+    cookies = pickle.load(open(BASE_DIR+"/cookies/facebook.cookies", "rb"))
+
+
+if not cookies:
+    pickle.dump(cookies, open(BASE_DIR + "/cookies/facebook.cookies", "wb"))
+
+
+# 模拟鼠标向下滑动 h5
+from selenium.webdriver.common.touch_actions import TouchActions
+
+
+"""设置手机的大小"""
+
+mobileEmulation = {'deviceName': 'Apple iPhone 5'}
+
+browser.add_experimental_option('mobileEmulation', mobileEmulation)
+
+
+browser.get("https://m.facebook.com/BBCChinese/posts/?ref=page_internal&mt_nav=0")
+
+
+browser.maximize_window()
+
+
+"""定位操作元素"""
+
+button = browser.find_element_by_xpath('/html/head/title')
+# 时间
+# title = browser.find_element_by_xpath('//*[@class="_5ptz timestamp livetimestamp"]/@title')
+
+
+browser.execute_script("window.scrollBy(0,1000)")
+import time
+time.sleep(10)
+
+# 帖子内容
+title = browser.find_element_by_xpath('//*[@class="_5pbx userContent _3576"]/p').text
+
+# title = browser.find_element_by_xpath('//*[@class="_1dwg _1w_m _q7o"]/div').f
+
+print(title)
+print(type(title))
+
+
+# //*[@class="_1dwg _1w_m _q7o"]/div
+
+
+
+
+
 browser.quit()
+
+

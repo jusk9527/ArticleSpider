@@ -31,7 +31,7 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 # 限速
-# DOWNLOAD_DELAY = 10
+DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -60,9 +60,9 @@ COOKIES_DEBUG = True
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     # 'ArticleSpider.middlewares.JSPageMiddleware': 1,
-   'ArticleSpider.middlewares.RandomUserAgentMiddlware': 543,
+   # 'ArticleSpider.middlewares.RandomUserAgentMiddlware': 543,
     # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 2,
-    # 'ArticleSpider.middlewares.RandomProxyMiddleware':3,
+    'ArticleSpider.middlewares.RandomProxyMiddleware':3,
 }
 
 # Enable or disable extensions
@@ -78,13 +78,16 @@ ITEM_PIPELINES = {
     # 'ArticleSpider.pipelines.ImagesPipeline': 1,
     # 'ArticleSpider.pipelines.DouyuPipeline':2,
     # 'ArticleSpider.pipelines.JsonWriterPipeline':3,
-    # 'ArticleSpider.pipelines.MysqlPipeline':4,
-    'ArticleSpider.pipelines.MysqlTwistedPipline':5,
+    # 'ArticleSpider.pipelines.MysqlPipeline':300,
+    # 'ArticleSpider.pipelines.MysqlTwistedPipline':5,
     # 'ArticleSpider.pipelines.ArticlespiderPipeline':300,
     # 'ArticleSpider.pipelines.JsonExporterPipleline': 2,
     #  'ArticleSpider.pipelines.JsonWithEncodingPipeline':2,
     #  'ArticleSpider.pipelines.ArticleImagePipeline': 1,
-     'ArticleSpider.pipelines.ElasticsearchPipeline': 1
+    #  'ArticleSpider.pipelines.ElasticsearchPipeline': 1
+    # 'scrapy_redis.pipelines.RedisPipeline': 300,
+
+    'ArticleSpider.pipelines.JobblePipeline':300,
 }
 
 I7MAGES_URLS_FIELD = "front_image_url"
@@ -126,7 +129,22 @@ AUTOTHROTTLE_ENABLED = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MYSQL_HOST = "45.76.219.234"
+# # scrapy-redis 设置
+# # 调度器
+# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+#
+# # redis连接地址
+# REDIS_URL = 'redis://127.0.0.1:6379/15'
+#
+#
+# # 配置持久化
+# SCHEDULER_PERSIST = True
+#
+# # 配置重爬
+# SCHEDULER_FLUSH_ON_START = True
+
+MYSQL_HOST = "127.0.0.1"
 MYSQL_DBNAME = "article_spider"
 MYSQL_PORT = 53306
 MYSQL_USER = "root"

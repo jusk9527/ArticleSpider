@@ -191,4 +191,14 @@ class LagouJobItem(scrapy.Item):
 
 
 
+# 伯乐在线
+class JobbolespiderItem(scrapy.Item):
+    # 文章标题
+    title = scrapy.Field()
+    # 文章类别
+    category = scrapy.Field()
+    # 文章时间信息
+    datatime = scrapy.Field()
+    # 文章类容
+    content = scrapy.Field()
 

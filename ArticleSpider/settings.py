@@ -31,7 +31,7 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 # 限速
-DOWNLOAD_DELAY = 2
+# DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -52,9 +52,10 @@ COOKIES_DEBUG = True
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-# SPIDER_MIDDLEWARES = {
-#    'ArticleSpider.middlewares.ArticlespiderSpiderMiddleware': 543,
-# }
+SPIDER_MIDDLEWARES = {
+   # 'ArticleSpider.middlewares.ArticlespiderSpiderMiddleware': 543,
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
@@ -62,8 +63,15 @@ DOWNLOADER_MIDDLEWARES = {
     # 'ArticleSpider.middlewares.JSPageMiddleware': 1,
    # 'ArticleSpider.middlewares.RandomUserAgentMiddlware': 543,
     # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 2,
-    'ArticleSpider.middlewares.RandomProxyMiddleware':3,
+    # 'ArticleSpider.middlewares.RandomProxyMiddleware':3,
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+
 }
+
+
+COOKIES_ENABLES = True
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -87,10 +95,12 @@ ITEM_PIPELINES = {
     #  'ArticleSpider.pipelines.ElasticsearchPipeline': 1
     # 'scrapy_redis.pipelines.RedisPipeline': 300,
 
-    'ArticleSpider.pipelines.JobblePipeline':300,
+    # 'ArticleSpider.pipelines.JobblePipeline':300,
+    # 'ArticleSpider.pipelines.FacebookPipeline':300,
+
 }
 
-I7MAGES_URLS_FIELD = "front_image_url"
+IMAGES_URLS_FIELD = "front_image_url"
 project_dir = os.path.abspath(os.path.dirname(__file__))
 IMAGES_STORE = os.path.join(project_dir, 'images')
 
@@ -163,3 +173,11 @@ MONGODB_DOCNAME = 'DouBanMovies'
 
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
+
+
+
+SPLASH_URL = 'http://localhost:8050'
+
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
+

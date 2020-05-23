@@ -202,3 +202,23 @@ class JobbolespiderItem(scrapy.Item):
     # 文章类容
     content = scrapy.Field()
 
+
+
+
+# 妹子网
+class MzituItem(scrapy.Item):
+    # 标题
+    title = scrapy.Field()
+    # 文时间信息
+    datatime = scrapy.Field()
+    # 图片url 链接
+    front_image_url = scrapy.Field()
+
+    # url 链接
+    base_url = scrapy.Field()
+
+    # 图片数量
+    max_images = scrapy.Field()
+
+
+

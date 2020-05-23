@@ -15,9 +15,9 @@ import scrapy
 import os
 from ArticleSpider import settings
 import pymongo
-class DouyuPipeline(object):
-    def process_item(self, item, spider):
-        return item
+# class DouyuPipeline(object):
+#     def process_item(self, item, spider):
+#         return item
 
 class ArticlespiderPipeline(object):
     def process_item(self, item, spider):
@@ -67,7 +67,7 @@ class DoubanspiderPipeline(object):
 class DouyuPipeline(object):
     def __init__(self):
         # 账号密码方式连接MongoDB | "mongodb://用户名:密码@公网ip:端口/"
-        self.client = pymongo.MongoClient('mongodb://root:root@45.76.219.234:27017/')
+        self.client = pymongo.MongoClient('mongodb://localhost:27017/')
         # 指定数据库
         self.db = self.client.test
         # 指定集合
@@ -239,11 +239,20 @@ class JobblePipeline(object):
         self.collection.insert(data)
 
 
+class FacebookPipeline(object):
+    red = "\033[31;1m  %s  \033[0m"
+    blue = "\033[34;1m  %s  \033[0m"
+    green = "\033[1;32;40m  %s  \033[0m"
+    yellow = "\033[33;1m  %s  \033[0m"
+    #
+    # def __init__(self):
+    #     self.num = 0
+    #     self.collect_about_num = 0
 
-
-
-
-
+    def process_item(self, item, spider):
+        # write file or db
+        print("in pipeline.........")
+        print(self.green % json.dumps(dict(item), ensure_ascii=False, indent=4))
 
 
 

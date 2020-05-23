@@ -8,7 +8,6 @@ import codecs
 import json
 
 from scrapy.pipelines.images import ImagesPipeline
-import pymongo
 from scrapy.utils.project import get_project_settings
 
 import scrapy

@@ -15,14 +15,22 @@ import scrapy
 import json
 from ArticleSpider.items import MzituItem
 from scrapy import Request
-# 斗鱼主播等图像下载
+# 妹子图片等图像下载，记住图片下载header 需要加Referer，不需要什么，只要加这个参数即可
 class MeiziSpider(scrapy.Spider):
 
 
     name = 'meizi'
     allowed_domains = ['mzitu.com']
     start_urls = ['https://www.mzitu.com/all/',]
+    custom_settings = {
+        "ITEM_PIPELINES": {
+                'ArticleSpider.pipelines.meizipiplines.MeiziPipeline' : 300,
 
+        },
+
+        "DOWNLOAD_DELAY": 2,
+
+    }
 
     def parse(self, response):
         a_xpath = response.xpath("//ul[@class='archives']/li/p[2]/a")
@@ -44,15 +52,22 @@ class MeiziSpider(scrapy.Spider):
 
         datatime = response.xpath("//div[@class='main-meta']/span[2]/text()").extract_first()
 
+        category = response.xpath('//span/a[@rel="category tag"]/text()').extract_first()
         item["title"] = a_word
         item["datatime"] = datatime
-        item["front_image_url"] = [images_url]
+        # item["image_urls"] = [images_url]
         item["base_url"] = response.url
         item["max_images"] = max_value
+        item["category"] = category
         print("=======a_href"+str(a_href))
-        for i in range(2, int(5)+1):
-            print(str(a_href)+"/"+str(i))
-            yield Request(str(a_href)+"/"+str(i),meta={"item":item,"i":i,
+
+
+        for i in range(0, int(max_value)+1):
+            # print(str(a_href)+"/"+str(i))
+            if i == 1:
+                pass
+            else:
+                yield Request(str(a_href)+"/"+str(i),meta={"item":item,"i":i,
                                                        "max_images":max_value},callback=self.parse_next_detail)
 
 
@@ -65,16 +80,11 @@ class MeiziSpider(scrapy.Spider):
         max_images = response.meta.get("max_images", 0)
         item = response.meta.get("item")
         images_url = response.xpath("//div[@class='main-image']/p/a/img/@src").extract_first()
-        print("response"+response.url)
-        item["front_image_url"].append(images_url)
-        print(item["base_url"] + "/" + str(i))
-        # Request(url=response.url)
+        # print("response"+response.url)
+        item["image_urls"] = images_url
+        # print(item["base_url"] + "/" + str(i))
 
-        if i<int(4):
-            pass
-
-        else:
-            yield item
+        yield item
 
 
 

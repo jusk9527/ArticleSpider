@@ -61,12 +61,12 @@ SPIDER_MIDDLEWARES = {
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     # 'ArticleSpider.middlewares.JSPageMiddleware': 1,
-   # 'ArticleSpider.middlewares.RandomUserAgentMiddlware': 543,
+   'ArticleSpider.middlewares.HeadersMiddleWare.RandomUserAgentMiddlware': 543,
     # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': 2,
-    # 'ArticleSpider.middlewares.RandomProxyMiddleware':3,
-    'scrapy_splash.SplashCookiesMiddleware': 723,
-    'scrapy_splash.SplashMiddleware': 725,
-    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+    'ArticleSpider.middlewares.ProxyMiddleWare.RandomProxyMiddleware':3,
+    # 'scrapy_splash.SplashCookiesMiddleware': 723,
+    # 'scrapy_splash.SplashMiddleware': 725,
+    # 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 
 }
 
@@ -82,7 +82,7 @@ COOKIES_ENABLES = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    # 'ArticleSpider.pipelines.DoubanspiderPipeline' : 300,
+    # 'ArticleSpider.pipelines.pipelines.DoubanspiderPipeline' : 300,
     # 'ArticleSpider.pipelines.ImagesPipeline': 1,
     # 'ArticleSpider.pipelines.DouyuPipeline':2,
     # 'ArticleSpider.pipelines.JsonWriterPipeline':3,

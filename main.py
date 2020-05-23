@@ -14,7 +14,9 @@ print(os.path.abspath(__file__))
 # execute(["scrapy", "crawl", "lagou"])
 # execute(["scrapy", "crawl", "facebook"])
 # execute(["scrapy", "crawl", "face"])
-# execute(["scrapy", "crawl", "meizi"])
+execute(["scrapy", "crawl", "meizi"])
 # execute(["scrapy", "crawl", "hj_spider"])
-execute(["scrapy", "crawl", "github_login"])
+# execute(["scrapy", "crawl", "github_login"])
+# execute(["scrapy", "crawl", "sina"])
+
 

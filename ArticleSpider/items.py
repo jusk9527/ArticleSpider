@@ -212,13 +212,38 @@ class MzituItem(scrapy.Item):
     # 文时间信息
     datatime = scrapy.Field()
     # 图片url 链接
-    front_image_url = scrapy.Field()
+    image_urls = scrapy.Field()
 
     # url 链接
     base_url = scrapy.Field()
 
     # 图片数量
     max_images = scrapy.Field()
+
+    # 类别
+    category = scrapy.Field()
+
+
+import scrapy
+
+
+class SinaItem(scrapy.Item):
+    # 大类的标题和url
+    parentTitle = scrapy.Field()
+    parentUrls = scrapy.Field()
+
+    # 小类的标题和子url
+    subTitle = scrapy.Field()
+    subUrls = scrapy.Field()
+
+    # 小类的目录存储路径
+    subFilename = scrapy.Field()
+
+    # 小类下的子链接
+    sonUrls = scrapy.Field()
+
+    # 文章的标题和内容
+    head = scrapy.Field()
 
 
 

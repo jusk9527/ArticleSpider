@@ -23,9 +23,17 @@ class DoubanSpider(scrapy.Spider):
     end = '&filter='
     start_urls = [url + str(start) + end]
 
+
+    custom_settings = {
+        "ITEM_PIPELINES": {
+                'ArticleSpider.pipelines.pipelines.DoubanspiderPipeline' : 300,
+
+
+        }
+    }
+
     def parse(self, response):
         item = DoubanspiderItem()
-        # movies = response.xpath("//div[@class='info']")
         movies = response.xpath("//div[@class=\'info\']")
 
         for each in movies:

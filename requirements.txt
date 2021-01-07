@@ -17,7 +17,7 @@ h==0.99
 hyperlink==19.0.0
 idna==2.8
 incremental==17.5.0
-lxml==4.4.2
+lxml==4.6.2
 mysqlclient==1.4.6
 parse==1.15.0
 parsel==1.5.2

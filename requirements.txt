@@ -21,7 +21,7 @@ lxml==4.4.2
 mysqlclient==1.4.6
 parse==1.15.0
 parsel==1.5.2
-Pillow==7.0.0
+Pillow==8.3.2
 Protego==0.1.15
 pyasn1==0.4.8
 pyasn1-modules==0.2.7
